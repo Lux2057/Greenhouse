@@ -1,0 +1,134 @@
+[
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Greenhouse.dir\\Core\\Src\\main.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\main.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\main.c",
+  "output": "CMakeFiles\\Greenhouse.dir\\Core\\Src\\main.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Greenhouse.dir\\Core\\Src\\stm32f4xx_it.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\stm32f4xx_it.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\stm32f4xx_it.c",
+  "output": "CMakeFiles\\Greenhouse.dir\\Core\\Src\\stm32f4xx_it.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Greenhouse.dir\\Core\\Src\\stm32f4xx_hal_msp.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\stm32f4xx_hal_msp.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\stm32f4xx_hal_msp.c",
+  "output": "CMakeFiles\\Greenhouse.dir\\Core\\Src\\stm32f4xx_hal_msp.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Greenhouse.dir\\Core\\Src\\sysmem.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\sysmem.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\sysmem.c",
+  "output": "CMakeFiles\\Greenhouse.dir\\Core\\Src\\sysmem.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o CMakeFiles\\Greenhouse.dir\\Core\\Src\\syscalls.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\syscalls.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\syscalls.c",
+  "output": "CMakeFiles\\Greenhouse.dir\\Core\\Src\\syscalls.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -x assembler-with-cpp -MMD -MP -g -o CMakeFiles\\Greenhouse.dir\\startup_stm32f401xc.s.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\startup_stm32f401xc.s",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\startup_stm32f401xc.s",
+  "output": "CMakeFiles\\Greenhouse.dir\\startup_stm32f401xc.s.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32f4xx.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\system_stm32f4xx.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Core\\Src\\system_stm32f4xx.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Core\\Src\\system_stm32f4xx.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c_ex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c_ex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_i2c_ex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ramfunc.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ramfunc.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ramfunc.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ramfunc.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma_ex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma_ex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma_ex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c.obj"
+},
+{
+  "directory": "D:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse",
+  "command": "C:\\ST\\STM32CubeCLT_1.18.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe -DDEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Core/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Device/ST/STM32F4xx/Include -ID:/Workspace/MCU/STM32/STM32F401CCU6/Greenhouse/Drivers/CMSIS/Include  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -Wextra -Wpedantic -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -o cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_exti.c.obj -c D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_exti.c",
+  "file": "D:\\Workspace\\MCU\\STM32\\STM32F401CCU6\\Greenhouse\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_exti.c",
+  "output": "cmake\\stm32cubemx\\CMakeFiles\\STM32_Drivers.dir\\__\\__\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_exti.c.obj"
+}
+]

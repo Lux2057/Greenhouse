@@ -10,23 +10,16 @@ App::App(ControllersFactory::Config config)
 
 void App::Start()
 {
-    bool ok = false;
-    LED_Controller::BlinkConfig blinkConfig = this->_controllers.LED->OK;
+    Validated<APDS9930_Controller::AmbientLight> ambient(false, APDS9930_Controller::AmbientLight());
 
     while (true)
     {
-        if (ok)
-        {
-            blinkConfig = this->_controllers.LED->OK;
-        }
-        else
-        {
-            blinkConfig = this->_controllers.LED->ERROR;
-        }
+        ambient = this->_controllers.LightSensor->ReadAmbientLight();
 
-        this->_controllers.LED->Blink(blinkConfig);
-
-        ok = !ok;
+        if (ambient.Valid)
+        {
+            this->_controllers.LED->Blink(this->_controllers.LED->OK);
+        }
 
         HAL_Delay(1000);
     }

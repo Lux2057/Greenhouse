@@ -121,13 +121,13 @@ public:
     struct Config
     {
     public:
-        uint16_t I2C_Address{0x39};
+        uint16_t I2C_Address{(uint16_t)(0x39 << 1)};
         uint32_t Timeout{1000};
     };
-    
+
     APDS9930() = delete;
-    APDS9930(I2C_HandleTypeDef* hi2c1, Config config);
-    
+    APDS9930(I2C_HandleTypeDef *hi2c1, Config config);
+
     int16_t init();
     uint8_t getMode();
     bool setMode(uint8_t mode, uint8_t enable);
@@ -185,7 +185,7 @@ public:
     bool readCh1Light(uint16_t &val);
 
 private:
-    I2C_HandleTypeDef* _hi2c1;
+    I2C_HandleTypeDef *_hi2c1;
     Config _config;
 
     /* Proximity Interrupt Threshold */

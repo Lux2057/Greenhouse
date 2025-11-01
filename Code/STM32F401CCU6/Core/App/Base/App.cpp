@@ -1,25 +1,45 @@
 #include "App.h"
 
-App::App(ControllersFactory::Config config)
+App::App(PCA9548A::Config config)
 {
     ControllersFactory controllersFactory;
     this->_controllers = controllersFactory.Build(config);
-
-    this->_config = config;
 }
 
 void App::Start()
 {
-    Validated<APDS9930_Controller::AmbientLight> ambient(false, APDS9930_Controller::AmbientLight());
+    LED_Controller::BlinkConfig blinkConfig = this->_controllers.LED->OK;
 
+    char *text = "Preved, Medved!";
+    this->_controllers.Display->WriteString(text, this->_controllers.Display->Font_7x10, SSD1306::Color::White);
+    this->_controllers.Display->SetCursor(0, 10);
+    this->_controllers.Display->WriteString(text, this->_controllers.Display->Font_7x10, SSD1306::Color::White);
+    this->_controllers.Display->SetCursor(0, 25);
+    text = "Temp.:";
+    this->_controllers.Display->WriteString(text, this->_controllers.Display->Font_7x10, SSD1306::Color::White);
+    this->_controllers.Display->SetCursor(49, 25);
+    text = "30";
+    this->_controllers.Display->WriteString(text, this->_controllers.Display->Font_7x10, SSD1306::Color::White);
+    this->_controllers.Display->SetCursor(64, 20);
+    text = "o";
+    this->_controllers.Display->WriteString(text, this->_controllers.Display->Font_6x8, SSD1306::Color::White);
+    this->_controllers.Display->UpdateScreen();
+
+    ValidatedValue<AHT10::Data> data;
     while (true)
     {
-        ambient = this->_controllers.LightSensor->ReadAmbientLight();
+        data = this->_controllers.HumidityAndTemperature->Value();
 
-        if (ambient.Valid)
+        if (data.Valid)
         {
-            this->_controllers.LED->Blink(this->_controllers.LED->OK);
+            blinkConfig = this->_controllers.LED->OK;
         }
+        else
+        {
+            blinkConfig = this->_controllers.LED->ERROR;
+        }
+
+        this->_controllers.LED->Blink(blinkConfig);
 
         HAL_Delay(1000);
     }

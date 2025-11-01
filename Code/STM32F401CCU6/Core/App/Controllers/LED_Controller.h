@@ -54,6 +54,7 @@ public:
     void Blink(BlinkConfig config);
 
     const BlinkConfig OK{BlinkConfig(350, 10, 1)};
+    const BlinkConfig Repaired{BlinkConfig(100, 100, 2)};
     const BlinkConfig ERROR{BlinkConfig(100, 50, 3)};
 
 private:

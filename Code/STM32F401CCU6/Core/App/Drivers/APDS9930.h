@@ -3,47 +3,50 @@
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_i2c.h"
+#include "I2C_DeviceBase.h"
+#include "../Models/Enums.h"
+#include "../Models/Templates.h"
 
 using namespace std;
 
-/* Command register modes */
-#define APDS9930_REPEATED_BYTE 0x80
-#define APDS9930_AUTO_INCREMENT 0xA0
-#define APDS9930_SPECIAL_FN 0xE0
-
-/* Error code for returned values */
-#define APDS9930_ERROR 0xFF
-
-/* Misc parameters */
-#define APDS9930_FIFO_PAUSE_TIME 30 // Wait period (ms) between FIFO reads
+class APDS9930 : public I2C_DeviceBase
+{
 
 /* APDS-9930 register addresses */
-#define APDS9930_ENABLE 0x00
-#define APDS9930_ATIME 0x01
-#define APDS9930_PTIME 0x02
-#define APDS9930_WTIME 0x03
-#define APDS9930_AILTL 0x04
-#define APDS9930_AILTH 0x05
-#define APDS9930_AIHTL 0x06
-#define APDS9930_AIHTH 0x07
-#define APDS9930_PILTL 0x08
-#define APDS9930_PILTH 0x09
-#define APDS9930_PIHTL 0x0A
-#define APDS9930_PIHTH 0x0B
-#define APDS9930_PERS 0x0C
-#define APDS9930_CONFIG 0x0D
-#define APDS9930_PPULSE 0x0E
-#define APDS9930_CONTROL 0x0F
-#define APDS9930_ID_1 0x12
-#define APDS9930_ID_2 0x39
-#define APDS9930_STATUS 0x13
-#define APDS9930_Ch0DATAL 0x14
-#define APDS9930_Ch0DATAH 0x15
-#define APDS9930_Ch1DATAL 0x16
-#define APDS9930_Ch1DATAH 0x17
-#define APDS9930_PDATAL 0x18
-#define APDS9930_PDATAH 0x19
-#define APDS9930_POFFSET 0x1E
+#define APDS9930_REG_ENABLE 0x00   // Enable of states and interrupts
+#define APDS9930_REG_ATIME 0x01    //  ALS ADC time
+#define APDS9930_REG_PTIME 0x02    //  Proximity ADC time
+#define APDS9930_REG_WTIME 0x03    //  Wait time
+#define APDS9930_REG_AILTL 0x04    //  ALS interrupt low threshold low byte
+#define APDS9930_REG_AILTH 0x05    //  ALS interrupt low threshold hi byte
+#define APDS9930_REG_AIHTL 0x06    //  ALS interrupt hi threshold low byte
+#define APDS9930_REG_AIHTH 0x07    //  ALS interrupt hi threshold hi byte
+#define APDS9930_REG_PILTL 0x08    //  Proximity interrupt low threshold low byte
+#define APDS9930_REG_PILTH 0x09    //  Proximity interrupt low threshold hi byte
+#define APDS9930_REG_PIHTL 0x0A    //  Proximity interrupt hi threshold low byte
+#define APDS9930_REG_PIHTH 0x0B    //  Proximity interrupt hi threshold hi byte
+#define APDS9930_REG_PERS 0x0C     //  Interrupt persistence filters
+#define APDS9930_REG_CONFIG 0x0D   // Configuration
+#define APDS9930_REG_PPULSE 0x0E   //  Proximity pulse count
+#define APDS9930_REG_CONTROL 0x0F  //  Gain control register
+#define APDS9930_REG_ID 0x12       // Device ID
+#define APDS9930_REG_STATUS 0x13   // Device status
+#define APDS9930_REG_Ch0DATAL 0x14 //  Ch0 ADC low data register
+#define APDS9930_REG_Ch0DATAH 0x15 // Ch0 ADC high data register
+#define APDS9930_REG_Ch1DATAL 0x16 //  Ch1 ADC low data register
+#define APDS9930_REG_Ch1DATAH 0x17 // Ch1 ADC high data register
+#define APDS9930_REG_PDATAL 0x18   // Proximity ADC low data register
+#define APDS9930_REG_PDATAH 0x19   //  Proximity ADC high data register
+#define APDS9930_REG_POFFSET 0x1E  //  Proximity offset register
+
+/* Command register modes */
+#define APDS9930_CMD_REPEATED_BYTE_TYPE 0
+#define APDS9930_CMD_AUTO_INCREMENT_TYPE 1
+#define APDS9930_CMD_SPECIAL_FUNCTION_TYPE 3
+
+/* On/Off definitions */
+#define APDS9930_OFF 0
+#define APDS9930_ON 1
 
 /* Bit fields */
 #define APDS9930_PON 0b00000001
@@ -54,19 +57,22 @@ using namespace std;
 #define APDS9930_PIEN 0b00100000
 #define APDS9930_SAI 0b01000000
 
-/* On/Off definitions */
-#define APDS9930_OFF 0
-#define APDS9930_ON 1
+/* Acceptable parameters for Mode */
+#define APDS9930_MODE_POWER 0
+#define APDS9930_MODE_AMBIENT_LIGHT 1
+#define APDS9930_MODE_PROXIMITY 2
+#define APDS9930_MODE_WAIT 3
+#define APDS9930_MODE_AMBIENT_LIGHT_INT 4
+#define APDS9930_MODE_PROXIMITY_INT 5
+#define APDS9930_MODE_SLEEP_AFTER_INT 6
+#define APDS9930_MODE_ALL 7
 
-/* Acceptable parameters for setMode */
-#define APDS9930_POWER 0
-#define APDS9930_AMBIENT_LIGHT 1
-#define APDS9930_PROXIMITY 2
-#define APDS9930_WAIT 3
-#define APDS9930_AMBIENT_LIGHT_INT 4
-#define APDS9930_PROXIMITY_INT 5
-#define APDS9930_SLEEP_AFTER_INT 6
-#define APDS9930_ALL 7
+/* ALS coefficients */
+#define APDS9930_DF 52
+#define APDS9930_GA 0.49
+#define APDS9930_ALS_B 1.862
+#define APDS9930_ALS_C 0.746
+#define APDS9930_ALS_D 1.291
 
 /* LED Drive values */
 #define APDS9930_LED_DRIVE_100MA 0
@@ -92,6 +98,7 @@ using namespace std;
 #define APDS9930_CLEAR_ALL_INTS 0xE7
 
 /* Default values */
+#define APDS9930_DEFAULT_I2C_DEV_ADDRESS 0x39
 #define APDS9930_DEFAULT_ATIME 0xED
 #define APDS9930_DEFAULT_WTIME 0xFF
 #define APDS9930_DEFAULT_PTIME 0xFF
@@ -108,98 +115,70 @@ using namespace std;
 #define APDS9930_DEFAULT_AIHT 0
 #define APDS9930_DEFAULT_PERS 0x22 // 2 consecutive prox or ALS for int.
 
-/* ALS coefficients */
-#define APDS9930_DF 52
-#define APDS9930_GA 0.49
-#define APDS9930_ALS_B 1.862
-#define APDS9930_ALS_C 0.746
-#define APDS9930_ALS_D 1.291
-
-class APDS9930
-{
 public:
-    struct Config
-    {
-    public:
-        uint16_t I2C_Address{(uint16_t)(0x39 << 1)};
-        uint32_t Timeout{1000};
-    };
-
     APDS9930() = delete;
-    APDS9930(I2C_HandleTypeDef *hi2c1, Config config);
+    APDS9930(Config config);
 
-    int16_t init();
-    uint8_t getMode();
-    bool setMode(uint8_t mode, uint8_t enable);
+    HAL_Response<uint8_t> ID();
+    HAL_Response<uint8_t> Mode();
+    HAL_Response<uint16_t> Proximity();
+    HAL_Response<float> AmbientLight();
 
-    /* Turn the APDS-9930 on and off */
-    bool enablePower();
-    bool disablePower();
+    bool ReInit() override;
 
-    /* Enable or disable specific sensors */
-    bool enableLightSensor(bool interrupts = false);
-    bool disableLightSensor();
-    bool enableProximitySensor(bool interrupts = false);
-    bool disableProximitySensor();
+    HAL_StatusTypeDef SetPower(bool enable);
 
-    /* LED drive strength control */
-    uint8_t getLEDDrive();
-    bool setLEDDrive(uint8_t drive);
-    // uint8_t getGestureLEDDrive();
-    // bool setGestureLEDDrive(uint8_t drive);
-
-    /* Gain control */
-    uint8_t getAmbientLightGain();
-    bool setAmbientLightGain(uint8_t gain);
-    uint8_t getProximityGain();
-    bool setProximityGain(uint8_t gain);
-    bool setProximityDiode(uint8_t drive);
-    uint8_t getProximityDiode();
-
-    /* Get and set light interrupt thresholds */
-    bool getLightIntLowThreshold(uint16_t &threshold);
-    bool setLightIntLowThreshold(uint16_t threshold);
-    bool getLightIntHighThreshold(uint16_t &threshold);
-    bool setLightIntHighThreshold(uint16_t threshold);
-
-    /* Get and set interrupt enables */
-    uint8_t getAmbientLightIntEnable();
-    bool setAmbientLightIntEnable(uint8_t enable);
-    uint8_t getProximityIntEnable();
-    bool setProximityIntEnable(uint8_t enable);
-
-    /* Clear interrupts */
-    bool clearAmbientLightInt();
-    bool clearProximityInt();
-    bool clearAllInts();
-
-    /* Proximity methods */
-    bool readProximity(uint16_t &val);
-
-    /* Ambient light methods */
-    bool readAmbientLightLux(float &val);
-    bool readAmbientLightLux(unsigned long &val);
-    float floatAmbientToLux(uint16_t Ch0, uint16_t Ch1);
-    unsigned long ulongAmbientToLux(uint16_t Ch0, uint16_t Ch1);
-    bool readCh0Light(uint16_t &val);
-    bool readCh1Light(uint16_t &val);
+    HAL_StatusTypeDef EnableLightSensor(bool enable, bool interrupts = false);
+    HAL_StatusTypeDef EnableProximitySensor(bool enable, bool interrupts = false);
 
 private:
-    I2C_HandleTypeDef *_hi2c1;
-    Config _config;
+    bool _init() override;
 
-    /* Proximity Interrupt Threshold */
-    uint16_t getProximityIntLowThreshold();
-    bool setProximityIntLowThreshold(uint16_t threshold);
-    uint16_t getProximityIntHighThreshold();
-    bool setProximityIntHighThreshold(uint16_t threshold);
+    HAL_StatusTypeDef _I2C_set_cmd(uint8_t cmd);
+    HAL_StatusTypeDef _I2C_set_reg(uint8_t const &reg);
+    HAL_StatusTypeDef _I2C_read_byte(uint8_t const &reg, uint8_t *val);
+    HAL_StatusTypeDef _I2C_write_byte(uint8_t const &reg, uint8_t val);
 
-    /* Raw I2C Commands */
-    bool wireWriteByte(uint8_t val);
-    bool wireWriteDataByte(uint8_t reg, uint8_t val);
-    bool wireWriteDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
-    bool wireReadDataByte(uint8_t reg, uint8_t &val);
-    int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
+    HAL_StatusTypeDef _set_mode(uint8_t mode, uint8_t enable);
+
+    HAL_Response<uint8_t> _LED_drive();
+    HAL_StatusTypeDef _set_LED_drive(uint8_t drive);
+
+    HAL_Response<uint8_t> _proximity_gain();
+    HAL_StatusTypeDef _set_proximity_gain(uint8_t gain);
+
+    HAL_Response<uint8_t> _ambient_light_gain();
+    HAL_StatusTypeDef _set_ambient_light_gain(uint8_t gain);
+
+    HAL_Response<uint8_t> _proximity_diode();
+    HAL_StatusTypeDef _set_proximity_diode(uint8_t value);
+
+    HAL_Response<uint16_t> _proximity_int_low_threshold();
+    HAL_StatusTypeDef _set_proximity_int_low_threshold(uint16_t threshold);
+
+    HAL_Response<uint16_t> _proximity_int_high_threshold();
+    HAL_StatusTypeDef _set_proximity_int_high_threshold(uint16_t threshold);
+
+    HAL_Response<uint16_t> _light_int_low_threshold();
+    HAL_StatusTypeDef _set_light_int_low_threshold(uint16_t threshold);
+
+    HAL_Response<uint16_t> _light_int_high_threshold();
+    HAL_StatusTypeDef _set_light_int_high_threshold(uint16_t threshold);
+
+    HAL_Response<uint8_t> _ambient_light_int_enabled();
+    HAL_StatusTypeDef _set_ambient_light_int_enabled(uint8_t value);
+
+    HAL_Response<uint8_t> _proximity_int_enabled();
+    HAL_StatusTypeDef _set_proximity_int_enabled(uint8_t value);
+
+    HAL_StatusTypeDef _clear_ambient_light_int();
+    HAL_StatusTypeDef _clear_proximity_int();
+    HAL_StatusTypeDef _clear_all_int();
+
+    HAL_Response<float> _float_ambient_to_lux(uint16_t Ch0, uint16_t Ch1);
+
+    HAL_Response<uint16_t> _ch0_light();
+    HAL_Response<uint16_t> _ch1_light();
 };
 
 #endif // APDS9930_H

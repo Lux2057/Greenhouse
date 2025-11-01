@@ -1,8 +1,10 @@
 #ifndef ENUMS_H
 #define ENUMS_H
 
-enum class Status
+enum class DeviceStatus
 {
+    Incorrect_Config = -3,
+    Unavailable = -2,
     Error = -1,
     Unknown = 0,
     Ok = 1

@@ -1,371 +1,693 @@
 #include "APDS9930.h"
 
-APDS9930::APDS9930(I2C_HandleTypeDef *hi2c1, Config config)
+APDS9930::APDS9930(Config config) : I2C_DeviceBase(config)
 {
-    this->_hi2c1 = hi2c1;
-    this->_config = config;
+    this->_init();
 }
 
-/**
- * @brief Configures I2C communications and initializes registers to defaults
- *
- * @return True if initialized successfully. False otherwise.
- */
-int16_t APDS9930::init()
+bool APDS9930::_init()
 {
-    uint8_t id;
-
-    /* Read ID register and check against known values for APDS-9930 */
-    if (!wireReadDataByte(APDS9930_ID_1, id))
-    {
-        return -1;
-    }
-
-    /* Set ENABLE register to 0 (disable all features) */
-    if (!setMode(APDS9930_ALL, APDS9930_OFF))
-    {
-        return -2;
-    }
-
-    /* Set default values for ambient light and proximity registers */
-    if (!wireWriteDataByte(APDS9930_ATIME, APDS9930_DEFAULT_ATIME))
-    {
-        return -3;
-    }
-    if (!wireWriteDataByte(APDS9930_WTIME, APDS9930_DEFAULT_WTIME))
-    {
-        return -4;
-    }
-    if (!wireWriteDataByte(APDS9930_PPULSE, APDS9930_DEFAULT_PPULSE))
-    {
-        return -5;
-    }
-    if (!wireWriteDataByte(APDS9930_POFFSET, APDS9930_DEFAULT_POFFSET))
-    {
-        return -6;
-    }
-    if (!wireWriteDataByte(APDS9930_CONFIG, APDS9930_DEFAULT_CONFIG))
-    {
-        return -7;
-    }
-    if (!setLEDDrive(APDS9930_DEFAULT_PDRIVE))
-    {
-        return -8;
-    }
-    if (!setProximityGain(APDS9930_DEFAULT_PGAIN))
-    {
-        return -9;
-    }
-    if (!setAmbientLightGain(APDS9930_DEFAULT_AGAIN))
-    {
-        return -10;
-    }
-    if (!setProximityDiode(APDS9930_DEFAULT_PDIODE))
-    {
-        return -11;
-    }
-    if (!setProximityIntLowThreshold(APDS9930_DEFAULT_PILT))
-    {
-        return -12;
-    }
-    if (!setProximityIntHighThreshold(APDS9930_DEFAULT_PIHT))
-    {
-        return -13;
-    }
-    if (!setLightIntLowThreshold(APDS9930_DEFAULT_AILT))
-    {
-        return -14;
-    }
-    if (!setLightIntHighThreshold(APDS9930_DEFAULT_AIHT))
-    {
-        return -15;
-    }
-    if (!wireWriteDataByte(APDS9930_PERS, APDS9930_DEFAULT_PERS))
-    {
-        return -16;
-    }
-
-    return 0;
-}
-
-/*******************************************************************************
- * Public methods for controlling the APDS-9930
- ******************************************************************************/
-
-/**
- * @brief Reads and returns the contents of the ENABLE register
- *
- * @return Contents of the ENABLE register. 0xFF if error.
- */
-uint8_t APDS9930::getMode()
-{
-    uint8_t enable_value;
-
-    /* Read current ENABLE register */
-    if (!wireReadDataByte(APDS9930_ENABLE, enable_value))
-    {
-        return ERROR;
-    }
-
-    return enable_value;
-}
-
-/**
- * @brief Enables or disables a feature in the APDS-9930
- *
- * @param[in] mode which feature to enable
- * @param[in] enable ON (1) or OFF (0)
- * @return True if operation success. False otherwise.
- */
-bool APDS9930::setMode(uint8_t mode, uint8_t enable)
-{
-    uint8_t reg_val;
-
-    /* Read current ENABLE register */
-    reg_val = getMode();
-    if (reg_val == ERROR)
-    {
+    if (!this->_is_ready_to_use())
         return false;
+
+    this->_set_mode(APDS9930_MODE_ALL, APDS9930_OFF);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_ATIME, APDS9930_DEFAULT_ATIME);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_WTIME, APDS9930_DEFAULT_WTIME);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_PPULSE, APDS9930_DEFAULT_PPULSE);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_POFFSET, APDS9930_DEFAULT_POFFSET);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_CONFIG, APDS9930_DEFAULT_CONFIG);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_LED_drive(APDS9930_DEFAULT_PDRIVE);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_proximity_gain(APDS9930_DEFAULT_PGAIN);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_ambient_light_gain(APDS9930_DEFAULT_AGAIN);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_proximity_diode(APDS9930_DEFAULT_PDIODE);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_proximity_int_low_threshold(APDS9930_DEFAULT_PILT);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_proximity_int_high_threshold(APDS9930_DEFAULT_PIHT);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_light_int_low_threshold(APDS9930_DEFAULT_AILT);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_set_light_int_high_threshold(APDS9930_DEFAULT_AIHT);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    this->_I2C_write_byte(APDS9930_REG_PERS, APDS9930_DEFAULT_PERS);
+    if (this->_status != DeviceStatus::Ok)
+        return false;
+
+    return true;
+}
+
+HAL_Response<uint8_t> APDS9930::ID()
+{
+    HAL_Response<uint8_t> response;
+
+    if (!this->_is_ready_to_use())
+    {
+        response.Status = HAL_StatusTypeDef::HAL_ERROR;
+        return response;
     }
 
-    /* Change bit(s) in ENABLE register */
+    response.Status = this->_I2C_read_byte(APDS9930_REG_ID, &response.Value);
+
+    return response;
+}
+
+HAL_Response<uint8_t> APDS9930::Mode()
+{
+    HAL_Response<uint8_t> response;
+
+    if (!this->_is_ready_to_use())
+    {
+        response.Status = HAL_StatusTypeDef::HAL_ERROR;
+        return response;
+    }
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_ENABLE, &response.Value);
+
+    if (response.Value == 0xFF)
+    {
+        response.Status = HAL_StatusTypeDef::HAL_ERROR;
+        this->_update_device_status(response.Status);
+    }
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::SetPower(bool enable)
+{
+    if (!this->_is_ready_to_use())
+    {
+        return HAL_StatusTypeDef::HAL_ERROR;
+    }
+
+    return this->_set_mode(APDS9930_MODE_POWER, enable ? APDS9930_ON : APDS9930_OFF);
+}
+
+HAL_Response<uint16_t> APDS9930::Proximity()
+{
+    HAL_Response<uint16_t> response;
+
+    if (!this->_is_ready_to_use())
+    {
+        response.Status = HAL_StatusTypeDef::HAL_ERROR;
+        return response;
+    }
+
+    response.Value = 0;
+
+    uint8_t byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PDATAL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PDATAH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value += ((uint16_t)byte << 8);
+
+    return response;
+}
+
+HAL_Response<float> APDS9930::AmbientLight()
+{
+
+    HAL_Response<float> response;
+    if (!this->_is_ready_to_use())
+    {
+        response.Status = HAL_StatusTypeDef::HAL_ERROR;
+        return response;
+    }
+
+    response.Value = 0.0;
+
+    HAL_Response<uint16_t> ch0;
+    HAL_Response<uint16_t> ch1;
+
+    ch0 = this->_ch0_light();
+    if (this->_status != DeviceStatus::Ok)
+    {
+        response.Status = ch0.Status;
+        return response;
+    }
+
+    ch1 = this->_ch1_light();
+    if (this->_status != DeviceStatus::Ok)
+    {
+        response.Status = ch1.Status;
+        return response;
+    }
+
+    return this->_float_ambient_to_lux(ch0.Value, ch1.Value);
+}
+
+bool APDS9930::ReInit()
+{
+    return this->_init();
+}
+
+HAL_StatusTypeDef APDS9930::EnableLightSensor(bool enable, bool interrupts)
+{
+    if (!this->_is_ready_to_use())
+    {
+        return HAL_StatusTypeDef::HAL_ERROR;
+    }
+
+    HAL_StatusTypeDef status;
+    if (enable)
+    {
+        status = this->_set_ambient_light_gain(APDS9930_DEFAULT_AGAIN);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        status = this->_set_ambient_light_int_enabled(interrupts ? APDS9930_ON : APDS9930_OFF);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        return this->_set_mode(APDS9930_MODE_AMBIENT_LIGHT, APDS9930_ON);
+    }
+    else
+    {
+        status = this->_set_ambient_light_int_enabled(APDS9930_OFF);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        return this->_set_mode(APDS9930_MODE_AMBIENT_LIGHT, APDS9930_OFF);
+    }
+}
+
+HAL_StatusTypeDef APDS9930::EnableProximitySensor(bool enable, bool interrupts)
+{
+    if (!this->_is_ready_to_use())
+    {
+        return HAL_StatusTypeDef::HAL_ERROR;
+    }
+
+    HAL_StatusTypeDef status;
+    if (enable)
+    {
+        status = this->_set_proximity_gain(APDS9930_DEFAULT_PGAIN);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        status = this->_set_LED_drive(APDS9930_DEFAULT_PDRIVE);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        status = this->_set_proximity_int_enabled(interrupts ? APDS9930_ON : APDS9930_OFF);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        return this->_set_mode(APDS9930_MODE_PROXIMITY, APDS9930_ON);
+    }
+    else
+    {
+        status = this->_set_proximity_int_enabled(APDS9930_OFF);
+        if (this->_status != DeviceStatus::Ok)
+        {
+            return status;
+        }
+
+        return this->_set_mode(APDS9930_MODE_PROXIMITY, APDS9930_OFF);
+    }
+}
+
+HAL_StatusTypeDef APDS9930::_I2C_set_cmd(uint8_t cmd)
+{
+    HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress << 1, &cmd, 1, this->_config.Timeout);
+
+    this->_update_device_status(status);
+
+    return status;
+}
+
+HAL_StatusTypeDef APDS9930::_I2C_set_reg(uint8_t const &reg)
+{
+    uint8_t cmd = reg | APDS9930_CMD_AUTO_INCREMENT_TYPE << 5 | 1 << 7;
+
+    return this->_I2C_set_cmd(cmd);
+}
+
+HAL_StatusTypeDef APDS9930::_I2C_read_byte(uint8_t const &reg, uint8_t *val)
+{
+    HAL_StatusTypeDef status = this->_I2C_set_reg(reg);
+
+    if (status != HAL_StatusTypeDef::HAL_OK)
+        return status;
+
+    status = HAL_I2C_Master_Receive(this->_config.I2C, this->_config.DevAddress << 1, val, 1, this->_config.Timeout);
+
+    this->_update_device_status(status);
+
+    return status;
+}
+
+HAL_StatusTypeDef APDS9930::_I2C_write_byte(uint8_t const &reg, uint8_t val)
+{
+    HAL_StatusTypeDef status = this->_I2C_set_reg(reg);
+
+    if (status != HAL_StatusTypeDef::HAL_OK)
+        return status;
+
+    status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress << 1, &val, 1, this->_config.Timeout);
+
+    this->_update_device_status(status);
+
+    return status;
+}
+
+HAL_StatusTypeDef APDS9930::_set_mode(uint8_t mode, uint8_t enable)
+{
+    HAL_Response<uint8_t> current_mode = this->Mode();
+
+    if (this->_status == DeviceStatus::Error || this->_status == DeviceStatus::Unavailable)
+        return HAL_StatusTypeDef::HAL_ERROR;
+
     enable = enable & 0x01;
-    if (mode >= 0 && mode <= 6)
+    if (mode <= 6)
     {
         if (enable)
         {
-            reg_val |= (1 << mode);
+            current_mode.Value |= (1 << mode);
         }
         else
         {
-            reg_val &= ~(1 << mode);
+            current_mode.Value &= ~(1 << mode);
         }
     }
-    else if (mode == APDS9930_ALL)
+    else if (mode == APDS9930_MODE_ALL)
     {
         if (enable)
         {
-            reg_val = 0x7F;
+            current_mode.Value = 0x7F;
         }
         else
         {
-            reg_val = 0x00;
+            current_mode.Value = 0x00;
         }
     }
 
-    /* Write value back to ENABLE register */
-    if (!wireWriteDataByte(APDS9930_ENABLE, reg_val))
-    {
-        return false;
-    }
-
-    return true;
+    return this->_I2C_write_byte(APDS9930_REG_ENABLE, current_mode.Value);
 }
 
-/**
- * @brief Starts the light (Ambient/IR) sensor on the APDS-9930
- *
- * @param[in] interrupts true to enable hardware interrupt on high or low light
- * @return True if sensor enabled correctly. False on error.
- */
-bool APDS9930::enableLightSensor(bool interrupts)
+HAL_Response<uint8_t> APDS9930::_LED_drive()
+{
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_CONTROL, &response.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = (response.Value >> 6) & 0b00000011;
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_LED_drive(uint8_t drive)
+{
+    HAL_Response<uint8_t> current_drive = this->_LED_drive();
+
+    if (this->_status != DeviceStatus::Ok)
+        return current_drive.Status;
+
+    drive &= 0b00000011;
+    drive = drive << 6;
+    current_drive.Value &= 0b00111111;
+    current_drive.Value |= drive;
+
+    return this->_I2C_write_byte(APDS9930_REG_CONTROL, current_drive.Value);
+}
+
+HAL_Response<uint8_t> APDS9930::_proximity_gain()
+{
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_CONTROL, &response.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = (response.Value >> 2) & 0b00000011;
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_proximity_gain(uint8_t gain)
+{
+    HAL_Response<uint8_t> current_gain = this->_proximity_gain();
+
+    if (this->_status != DeviceStatus::Ok)
+        return current_gain.Status;
+
+    gain &= 0b00000011;
+    gain = gain << 2;
+    current_gain.Value &= 0b11110011;
+    current_gain.Value |= gain;
+
+    return this->_I2C_write_byte(APDS9930_REG_CONTROL, current_gain.Value);
+}
+
+HAL_Response<uint8_t> APDS9930::_ambient_light_gain()
+{
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_CONTROL, &response.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value &= 0b00000011;
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_ambient_light_gain(uint8_t gain)
+{
+    HAL_Response<uint8_t> current_gain = this->_ambient_light_gain();
+
+    if (this->_status != DeviceStatus::Ok)
+        return current_gain.Status;
+
+    gain &= 0b00000011;
+    current_gain.Value &= 0b11111100;
+    current_gain.Value |= gain;
+
+    return this->_I2C_write_byte(APDS9930_REG_CONTROL, current_gain.Value);
+}
+
+HAL_Response<uint8_t> APDS9930::_proximity_diode()
+{
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_CONTROL, &response.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = (response.Value >> 4) & 0b00000011;
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_proximity_diode(uint8_t value)
+{
+    HAL_Response<uint8_t> current_value = this->_proximity_diode();
+
+    if (this->_status != DeviceStatus::Ok)
+        return current_value.Status;
+
+    value &= 0b00000011;
+    value = value << 4;
+    current_value.Value &= 0b11001111;
+    current_value.Value |= value;
+
+    return this->_I2C_write_byte(APDS9930_REG_CONTROL, current_value.Value);
+}
+
+HAL_Response<uint16_t> APDS9930::_proximity_int_low_threshold()
+{
+    uint8_t byte;
+    HAL_Response<uint16_t> response;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PILTL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PILTH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value |= ((uint16_t)byte << 8);
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_proximity_int_low_threshold(uint16_t threshold)
+{
+    uint8_t low;
+    uint8_t high;
+    high = threshold >> 8;
+    low = threshold & 0x00FF;
+
+    HAL_StatusTypeDef status = this->_I2C_write_byte(APDS9930_REG_PILTL, low);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return status;
+    }
+
+    return this->_I2C_write_byte(APDS9930_REG_PILTH, high);
+}
+
+HAL_Response<uint16_t> APDS9930::_proximity_int_high_threshold()
+{
+    uint8_t byte;
+    HAL_Response<uint16_t> response;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PIHTL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_PIHTH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value |= ((uint16_t)byte << 8);
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_proximity_int_high_threshold(uint16_t threshold)
+{
+    uint8_t low;
+    uint8_t high;
+    high = threshold >> 8;
+    low = threshold & 0x00FF;
+
+    HAL_StatusTypeDef status = this->_I2C_write_byte(APDS9930_REG_PIHTL, low);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return status;
+    }
+
+    return this->_I2C_write_byte(APDS9930_REG_PIHTH, high);
+}
+
+HAL_Response<uint16_t> APDS9930::_light_int_low_threshold()
+{
+    uint8_t byte;
+    HAL_Response<uint16_t> response;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_AILTL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_AILTH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value |= ((uint16_t)byte << 8);
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_light_int_low_threshold(uint16_t threshold)
+{
+    uint8_t low;
+    uint8_t high;
+    high = threshold >> 8;
+    low = threshold & 0x00FF;
+
+    HAL_StatusTypeDef status = this->_I2C_write_byte(APDS9930_REG_AILTL, low);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return status;
+    }
+
+    return this->_I2C_write_byte(APDS9930_REG_AILTH, high);
+}
+
+HAL_Response<uint16_t> APDS9930::_light_int_high_threshold()
+{
+    uint8_t byte;
+    HAL_Response<uint16_t> response;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_AIHTL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_AIHTH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    response.Value |= ((uint16_t)byte << 8);
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_light_int_high_threshold(uint16_t threshold)
+{
+    uint8_t low;
+    uint8_t high;
+    high = threshold >> 8;
+    low = threshold & 0x00FF;
+
+    HAL_StatusTypeDef status = this->_I2C_write_byte(APDS9930_REG_AIHTL, low);
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return status;
+    }
+
+    return this->_I2C_write_byte(APDS9930_REG_AIHTH, high);
+}
+
+HAL_Response<uint8_t> APDS9930::_ambient_light_int_enabled()
+{
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_ENABLE, &response.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = (response.Value >> 4) & 0b00000001;
+
+    return response;
+}
+
+HAL_StatusTypeDef APDS9930::_set_ambient_light_int_enabled(uint8_t value)
 {
 
-    /* Set default gain, interrupts, enable power, and enable sensor */
-    if (!setAmbientLightGain(APDS9930_DEFAULT_AGAIN))
-    {
-        return false;
-    }
-    if (interrupts)
-    {
-        if (!setAmbientLightIntEnable(1))
-        {
-            return false;
-        }
-    }
-    else
-    {
-        if (!setAmbientLightIntEnable(0))
-        {
-            return false;
-        }
-    }
-    if (!enablePower())
-    {
-        return false;
-    }
-    if (!setMode(APDS9930_AMBIENT_LIGHT, 1))
-    {
-        return false;
-    }
+    HAL_Response<uint8_t> current_enable;
+    current_enable.Status = this->_I2C_read_byte(APDS9930_REG_ENABLE, &current_enable.Value);
 
-    return true;
+    if (this->_status != DeviceStatus::Ok)
+        return current_enable.Status;
+
+    value &= 0b00000001;
+    value = value << 4;
+    current_enable.Value &= 0b11101111;
+    current_enable.Value |= value;
+
+    return this->_I2C_write_byte(APDS9930_REG_ENABLE, current_enable.Value);
 }
 
-/**
- * @brief Ends the light sensor on the APDS-9930
- *
- * @return True if sensor disabled correctly. False on error.
- */
-bool APDS9930::disableLightSensor()
+HAL_Response<uint8_t> APDS9930::_proximity_int_enabled()
 {
-    if (!setAmbientLightIntEnable(0))
-    {
-        return false;
-    }
-    if (!setMode(APDS9930_AMBIENT_LIGHT, 0))
-    {
-        return false;
-    }
+    HAL_Response<uint8_t> response;
+    response.Status = this->_I2C_read_byte(APDS9930_REG_ENABLE, &response.Value);
 
-    return true;
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = (response.Value >> 5) & 0b00000001;
+
+    return response;
 }
 
-/**
- * @brief Starts the proximity sensor on the APDS-9930
- *
- * @param[in] interrupts true to enable hardware external interrupt on proximity
- * @return True if sensor enabled correctly. False on error.
- */
-bool APDS9930::enableProximitySensor(bool interrupts)
+HAL_StatusTypeDef APDS9930::_set_proximity_int_enabled(uint8_t value)
 {
-    /* Set default gain, LED, interrupts, enable power, and enable sensor */
-    if (!setProximityGain(APDS9930_DEFAULT_PGAIN))
-    {
-        return false;
-    }
-    if (!setLEDDrive(APDS9930_DEFAULT_PDRIVE))
-    {
-        return false;
-    }
-    if (interrupts)
-    {
-        if (!setProximityIntEnable(1))
-        {
-            return false;
-        }
-    }
-    else
-    {
-        if (!setProximityIntEnable(0))
-        {
-            return false;
-        }
-    }
-    if (!enablePower())
-    {
-        return false;
-    }
-    if (!setMode(APDS9930_PROXIMITY, 1))
-    {
-        return false;
-    }
 
-    return true;
+    HAL_Response<uint8_t> current_enable;
+    current_enable.Status = this->_I2C_read_byte(APDS9930_REG_ENABLE, &current_enable.Value);
+
+    if (this->_status != DeviceStatus::Ok)
+        return current_enable.Status;
+
+    value &= 0b00000001;
+    value = value << 5;
+    current_enable.Value &= 0b11011111;
+    current_enable.Value |= value;
+
+    return this->_I2C_write_byte(APDS9930_REG_ENABLE, current_enable.Value);
 }
 
-/**
- * @brief Ends the proximity sensor on the APDS-9930
- *
- * @return True if sensor disabled correctly. False on error.
- */
-bool APDS9930::disableProximitySensor()
+HAL_StatusTypeDef APDS9930::_clear_ambient_light_int()
 {
-    if (!setProximityIntEnable(0))
-    {
-        return false;
-    }
-    if (!setMode(APDS9930_PROXIMITY, 0))
-    {
-        return false;
-    }
-
-    return true;
+    return this->_I2C_set_cmd(APDS9930_CLEAR_ALS_INT);
 }
 
-/**
- * Turn the APDS-9930 on
- *
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::enablePower()
+HAL_StatusTypeDef APDS9930::_clear_proximity_int()
 {
-    if (!setMode(APDS9930_POWER, 1))
-    {
-        return false;
-    }
-
-    return true;
+    return this->_I2C_set_cmd(APDS9930_CLEAR_PROX_INT);
 }
 
-/**
- * Turn the APDS-9930 off
- *
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::disablePower()
+HAL_StatusTypeDef APDS9930::_clear_all_int()
 {
-    if (!setMode(APDS9930_POWER, 0))
-    {
-        return false;
-    }
-
-    return true;
+    return this->_I2C_set_cmd(APDS9930_CLEAR_ALL_INTS);
 }
 
-/*******************************************************************************
- * Ambient light sensor controls
- ******************************************************************************/
-
-/**
- * @brief Reads the ambient (clear) light level as a 16-bit value
- *
- * @param[out] val value of the light sensor.
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::readAmbientLightLux(float &val)
-{
-    uint16_t Ch0;
-    uint16_t Ch1;
-
-    /* Read value from channel 0 */
-    if (!readCh0Light(Ch0))
-    {
-        return false;
-    }
-
-    /* Read value from channel 1 */
-    if (!readCh1Light(Ch1))
-    {
-        return false;
-    }
-
-    val = floatAmbientToLux(Ch0, Ch1);
-    return true;
-}
-
-bool APDS9930::readAmbientLightLux(unsigned long &val)
-{
-    uint16_t Ch0;
-    uint16_t Ch1;
-
-    /* Read value from channel 0 */
-    if (!readCh0Light(Ch0))
-    {
-        return false;
-    }
-
-    /* Read value from channel 1 */
-    if (!readCh1Light(Ch1))
-    {
-        return false;
-    }
-
-    val = ulongAmbientToLux(Ch0, Ch1);
-    return true;
-}
-
-float APDS9930::floatAmbientToLux(uint16_t Ch0, uint16_t Ch1)
+HAL_Response<float> APDS9930::_float_ambient_to_lux(uint16_t Ch0, uint16_t Ch1)
 {
     uint8_t x[4] = {1, 8, 16, 120};
     float ALSIT = 2.73 * (256 - APDS9930_DEFAULT_ATIME);
@@ -374,805 +696,61 @@ float APDS9930::floatAmbientToLux(uint16_t Ch0, uint16_t Ch1)
     float iac = t1 > t2 ? t1 : t2;
     if (iac < 0)
         iac = 0;
-    float lpc = APDS9930_GA * APDS9930_DF / (ALSIT * x[getAmbientLightGain()]);
-    return iac * lpc;
+
+    HAL_Response<float> response;
+
+    HAL_Response<uint8_t> ambient_gain = this->_ambient_light_gain();
+    response.Status = ambient_gain.Status;
+    if (this->_status != DeviceStatus::Ok)
+    {
+        return response;
+    }
+
+    float lpc = APDS9930_GA * APDS9930_DF / (ALSIT * x[ambient_gain.Value]);
+
+    response.Value = iac * lpc;
+
+    return response;
 }
 
-unsigned long APDS9930::ulongAmbientToLux(uint16_t Ch0, uint16_t Ch1)
+HAL_Response<uint16_t> APDS9930::_ch0_light()
 {
-    uint8_t x[4] = {1, 8, 16, 120};
-    unsigned long ALSIT = 2.73 * (256 - APDS9930_DEFAULT_ATIME);
-    float t1 = Ch0 - APDS9930_ALS_B * Ch1;
-    float t2 = APDS9930_ALS_C * Ch0 - APDS9930_ALS_D * Ch1;
-    unsigned long iac = t1 > t2 ? t1 : t2;
-    if (iac < 0)
-        iac = 0;
-    unsigned long lpc = APDS9930_GA * APDS9930_DF / (ALSIT * x[getAmbientLightGain()]);
-    return iac * lpc;
+    HAL_Response<uint16_t> response;
+    response.Value = 0;
+    uint8_t byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_Ch0DATAL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value = byte;
+
+    response.Status = this->_I2C_read_byte(APDS9930_REG_Ch0DATAH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
+
+    response.Value += ((uint16_t)byte << 8);
+
+    return response;
 }
 
-bool APDS9930::readCh0Light(uint16_t &val)
+HAL_Response<uint16_t> APDS9930::_ch1_light()
 {
-    uint8_t val_byte;
-    val = 0;
+    HAL_Response<uint16_t> response;
+    response.Value = 0;
+    uint8_t byte;
 
-    /* Read value from channel 0 */
-    if (!wireReadDataByte(APDS9930_Ch0DATAL, val_byte))
-    {
-        return false;
-    }
-    val = val_byte;
-    if (!wireReadDataByte(APDS9930_Ch0DATAH, val_byte))
-    {
-        return false;
-    }
-    val += ((uint16_t)val_byte << 8);
-    return true;
-}
+    response.Status = this->_I2C_read_byte(APDS9930_REG_Ch1DATAL, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
 
-bool APDS9930::readCh1Light(uint16_t &val)
-{
-    uint8_t val_byte;
-    val = 0;
+    response.Value = byte;
 
-    /* Read value from channel 0 */
-    if (!wireReadDataByte(APDS9930_Ch1DATAL, val_byte))
-    {
-        return false;
-    }
-    val = val_byte;
-    if (!wireReadDataByte(APDS9930_Ch1DATAH, val_byte))
-    {
-        return false;
-    }
-    val += ((uint16_t)val_byte << 8);
-    return true;
-}
+    response.Status = this->_I2C_read_byte(APDS9930_REG_Ch1DATAH, &byte);
+    if (this->_status != DeviceStatus::Ok)
+        return response;
 
-/*******************************************************************************
- * Proximity sensor controls
- ******************************************************************************/
+    response.Value += ((uint16_t)byte << 8);
 
-/**
- * @brief Reads the proximity level as an 8-bit value
- *
- * @param[out] val value of the proximity sensor.
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::readProximity(uint16_t &val)
-{
-    val = 0;
-    uint8_t val_byte;
-
-    /* Read value from proximity data register */
-    if (!wireReadDataByte(APDS9930_PDATAL, val_byte))
-    {
-        return false;
-    }
-    val = val_byte;
-    if (!wireReadDataByte(APDS9930_PDATAH, val_byte))
-    {
-        return false;
-    }
-    val += ((uint16_t)val_byte << 8);
-
-    return true;
-}
-
-/*******************************************************************************
- * Getters and setters for register values
- ******************************************************************************/
-
-/**
- * @brief Returns the lower threshold for proximity detection
- *
- * @return lower threshold
- */
-uint16_t APDS9930::getProximityIntLowThreshold()
-{
-    uint16_t val;
-    uint8_t val_byte;
-
-    /* Read value from PILT register */
-    if (!wireReadDataByte(APDS9930_PILTL, val_byte))
-    {
-        val = 0;
-    }
-    val = val_byte;
-    if (!wireReadDataByte(APDS9930_PILTH, val_byte))
-    {
-        val = 0;
-    }
-    val |= ((uint16_t)val_byte << 8);
-
-    return val;
-}
-
-/**
- * @brief Sets the lower threshold for proximity detection
- *
- * @param[in] threshold the lower proximity threshold
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setProximityIntLowThreshold(uint16_t threshold)
-{
-    uint8_t lo;
-    uint8_t hi;
-    hi = threshold >> 8;
-    lo = threshold & 0x00FF;
-
-    if (!wireWriteDataByte(APDS9930_PILTL, lo))
-    {
-        return false;
-    }
-    if (!wireWriteDataByte(APDS9930_PILTH, hi))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Returns the high threshold for proximity detection
- *
- * @return high threshold
- */
-uint16_t APDS9930::getProximityIntHighThreshold()
-{
-    uint16_t val;
-    uint8_t val_byte;
-
-    /* Read value from PILT register */
-    if (!wireReadDataByte(APDS9930_PIHTL, val_byte))
-    {
-        val = 0;
-    }
-    val = val_byte;
-    if (!wireReadDataByte(APDS9930_PIHTH, val_byte))
-    {
-        val = 0;
-    }
-    val |= ((uint16_t)val_byte << 8);
-
-    return val;
-}
-
-/**
- * @brief Sets the high threshold for proximity detection
- *
- * @param[in] threshold the high proximity threshold
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setProximityIntHighThreshold(uint16_t threshold)
-{
-    uint8_t lo;
-    uint8_t hi;
-    hi = threshold >> 8;
-    lo = threshold & 0x00FF;
-
-    if (!wireWriteDataByte(APDS9930_PIHTL, lo))
-    {
-        return false;
-    }
-    if (!wireWriteDataByte(APDS9930_PIHTH, hi))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Returns LED drive strength for proximity and ALS
- *
- * Value    LED Current
- *   0        100 mA
- *   1         50 mA
- *   2         25 mA
- *   3         12.5 mA
- *
- * @return the value of the LED drive strength. 0xFF on failure.
- */
-uint8_t APDS9930::getLEDDrive()
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out LED drive bits */
-    val = (val >> 6) & 0b00000011;
-
-    return val;
-}
-
-/**
- * @brief Sets the LED drive strength for proximity and ALS
- *
- * Value    LED Current
- *   0        100 mA
- *   1         50 mA
- *   2         25 mA
- *   3         12.5 mA
- *
- * @param[in] drive the value (0-3) for the LED drive strength
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setLEDDrive(uint8_t drive)
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    drive &= 0b00000011;
-    drive = drive << 6;
-    val &= 0b00111111;
-    val |= drive;
-
-    /* Write register value back into CONTROL register */
-    if (!wireWriteDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Returns receiver gain for proximity detection
- *
- * Value    Gain
- *   0       1x
- *   1       2x
- *   2       4x
- *   3       8x
- *
- * @return the value of the proximity gain. 0xFF on failure.
- */
-uint8_t APDS9930::getProximityGain()
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out PDRIVE bits */
-    val = (val >> 2) & 0b00000011;
-
-    return val;
-}
-
-/**
- * @brief Sets the receiver gain for proximity detection
- *
- * Value    Gain
- *   0       1x
- *   1       2x
- *   2       4x
- *   3       8x
- *
- * @param[in] drive the value (0-3) for the gain
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setProximityGain(uint8_t drive)
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    drive &= 0b00000011;
-    drive = drive << 2;
-    val &= 0b11110011;
-    val |= drive;
-
-    /* Write register value back into CONTROL register */
-    if (!wireWriteDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Returns the proximity diode
- *
- * Value    Diode selection
- *   0       Reserved
- *   1       Reserved
- *   2       Use Ch1 diode
- *   3       Reserved
- *
- * @return the selected diode. 0xFF on failure.
- */
-uint8_t APDS9930::getProximityDiode()
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out PDRIVE bits */
-    val = (val >> 4) & 0b00000011;
-
-    return val;
-}
-
-/**
- * @brief Selects the proximity diode
- *
- * Value    Diode selection
- *   0       Reserved
- *   1       Reserved
- *   2       Use Ch1 diode
- *   3       Reserved
- *
- * @param[in] drive the value (0-3) for the diode
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setProximityDiode(uint8_t drive)
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    drive &= 0b00000011;
-    drive = drive << 4;
-    val &= 0b11001111;
-    val |= drive;
-
-    /* Write register value back into CONTROL register */
-    if (!wireWriteDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Returns receiver gain for the ambient light sensor (ALS)
- *
- * Value    Gain
- *   0        1x
- *   1        4x
- *   2       16x
- *   3      120x
- *
- * @return the value of the ALS gain. 0xFF on failure.
- */
-uint8_t APDS9930::getAmbientLightGain()
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out ADRIVE bits */
-    val &= 0b00000011;
-
-    return val;
-}
-
-/**
- * @brief Sets the receiver gain for the ambient light sensor (ALS)
- *
- * Value    Gain
- *   0        1x
- *   1        4x
- *   2       16x
- *   3       64x
- *
- * @param[in] drive the value (0-3) for the gain
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setAmbientLightGain(uint8_t drive)
-{
-    uint8_t val;
-
-    /* Read value from CONTROL register */
-    if (!wireReadDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    drive &= 0b00000011;
-    val &= 0b11111100;
-    val |= drive;
-
-    /* Write register value back into CONTROL register */
-    if (!wireWriteDataByte(APDS9930_CONTROL, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Gets the low threshold for ambient light interrupts
- *
- * @param[out] threshold current low threshold stored on the APDS-9930
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::getLightIntLowThreshold(uint16_t &threshold)
-{
-    uint8_t val_byte;
-    threshold = 0;
-
-    /* Read value from ambient light low threshold, low byte register */
-    if (!wireReadDataByte(APDS9930_AILTL, val_byte))
-    {
-        return false;
-    }
-    threshold = val_byte;
-
-    /* Read value from ambient light low threshold, high byte register */
-    if (!wireReadDataByte(APDS9930_AILTH, val_byte))
-    {
-        return false;
-    }
-    threshold = threshold + ((uint16_t)val_byte << 8);
-
-    return true;
-}
-
-/**
- * @brief Sets the low threshold for ambient light interrupts
- *
- * @param[in] threshold low threshold value for interrupt to trigger
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setLightIntLowThreshold(uint16_t threshold)
-{
-    uint8_t val_low;
-    uint8_t val_high;
-
-    /* Break 16-bit threshold into 2 8-bit values */
-    val_low = threshold & 0x00FF;
-    val_high = (threshold & 0xFF00) >> 8;
-
-    /* Write low byte */
-    if (!wireWriteDataByte(APDS9930_AILTL, val_low))
-    {
-        return false;
-    }
-
-    /* Write high byte */
-    if (!wireWriteDataByte(APDS9930_AILTH, val_high))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Gets the high threshold for ambient light interrupts
- *
- * @param[out] threshold current low threshold stored on the APDS-9930
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::getLightIntHighThreshold(uint16_t &threshold)
-{
-    uint8_t val_byte;
-    threshold = 0;
-
-    /* Read value from ambient light high threshold, low byte register */
-    if (!wireReadDataByte(APDS9930_AIHTL, val_byte))
-    {
-        return false;
-    }
-    threshold = val_byte;
-
-    /* Read value from ambient light high threshold, high byte register */
-    if (!wireReadDataByte(APDS9930_AIHTH, val_byte))
-    {
-        return false;
-    }
-    threshold = threshold + ((uint16_t)val_byte << 8);
-
-    return true;
-}
-
-/**
- * @brief Sets the high threshold for ambient light interrupts
- *
- * @param[in] threshold high threshold value for interrupt to trigger
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setLightIntHighThreshold(uint16_t threshold)
-{
-    uint8_t val_low;
-    uint8_t val_high;
-
-    /* Break 16-bit threshold into 2 8-bit values */
-    val_low = threshold & 0x00FF;
-    val_high = (threshold & 0xFF00) >> 8;
-
-    /* Write low byte */
-    if (!wireWriteDataByte(APDS9930_AIHTL, val_low))
-    {
-        return false;
-    }
-
-    /* Write high byte */
-    if (!wireWriteDataByte(APDS9930_AIHTH, val_high))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Gets if ambient light interrupts are enabled or not
- *
- * @return 1 if interrupts are enabled, 0 if not. 0xFF on error.
- */
-uint8_t APDS9930::getAmbientLightIntEnable()
-{
-    uint8_t val;
-
-    /* Read value from ENABLE register */
-    if (!wireReadDataByte(APDS9930_ENABLE, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out AIEN bit */
-    val = (val >> 4) & 0b00000001;
-
-    return val;
-}
-
-/**
- * @brief Turns ambient light interrupts on or off
- *
- * @param[in] enable 1 to enable interrupts, 0 to turn them off
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setAmbientLightIntEnable(uint8_t enable)
-{
-    uint8_t val;
-
-    /* Read value from ENABLE register */
-    if (!wireReadDataByte(APDS9930_ENABLE, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    enable &= 0b00000001;
-    enable = enable << 4;
-    val &= 0b11101111;
-    val |= enable;
-
-    /* Write register value back into ENABLE register */
-    if (!wireWriteDataByte(APDS9930_ENABLE, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Gets if proximity interrupts are enabled or not
- *
- * @return 1 if interrupts are enabled, 0 if not. 0xFF on error.
- */
-uint8_t APDS9930::getProximityIntEnable()
-{
-    uint8_t val;
-
-    /* Read value from ENABLE register */
-    if (!wireReadDataByte(APDS9930_ENABLE, val))
-    {
-        return ERROR;
-    }
-
-    /* Shift and mask out PIEN bit */
-    val = (val >> 5) & 0b00000001;
-
-    return val;
-}
-
-/**
- * @brief Turns proximity interrupts on or off
- *
- * @param[in] enable 1 to enable interrupts, 0 to turn them off
- * @return True if operation successful. False otherwise.
- */
-bool APDS9930::setProximityIntEnable(uint8_t enable)
-{
-    uint8_t val;
-
-    /* Read value from ENABLE register */
-    if (!wireReadDataByte(APDS9930_ENABLE, val))
-    {
-        return false;
-    }
-
-    /* Set bits in register to given value */
-    enable &= 0b00000001;
-    enable = enable << 5;
-    val &= 0b11011111;
-    val |= enable;
-
-    /* Write register value back into ENABLE register */
-    if (!wireWriteDataByte(APDS9930_ENABLE, val))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Clears the ambient light interrupt
- *
- * @return True if operation completed successfully. False otherwise.
- */
-bool APDS9930::clearAmbientLightInt()
-{
-    if (!wireWriteByte(APDS9930_CLEAR_ALS_INT))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Clears the proximity interrupt
- *
- * @return True if operation completed successfully. False otherwise.
- */
-bool APDS9930::clearProximityInt()
-{
-    if (!wireWriteByte(APDS9930_CLEAR_PROX_INT))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Clears all interrupts
- *
- * @return True if operation completed successfully. False otherwise.
- */
-bool APDS9930::clearAllInts()
-{
-    if (!wireWriteByte(APDS9930_CLEAR_ALL_INTS))
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/*******************************************************************************
- * Raw I2C Reads and Writes
- ******************************************************************************/
-
-/**
- * @brief Writes a single byte to the I2C device (no register)
- *
- * @param[in] val the 1-byte value to write to the I2C device
- * @return True if successful write operation. False otherwise.
- */
-bool APDS9930::wireWriteByte(uint8_t val)
-{
-    if (HAL_I2C_Master_Transmit(this->_hi2c1, this->_config.I2C_Address, &val, 1, this->_config.Timeout) != HAL_StatusTypeDef::HAL_OK)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Writes a single byte to the I2C device and specified register
- *
- * @param[in] reg the register in the I2C device to write to
- * @param[in] val the 1-byte value to write to the I2C device
- * @return True if successful write operation. False otherwise.
- */
-bool APDS9930::wireWriteDataByte(uint8_t reg, uint8_t val)
-{
-    if (HAL_I2C_Mem_Write(this->_hi2c1, this->_config.I2C_Address, reg, APDS9930_AUTO_INCREMENT, &val, 1, this->_config.Timeout) != HAL_StatusTypeDef::HAL_OK)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Writes a block (array) of bytes to the I2C device and register
- *
- * @param[in] reg the register in the I2C device to write to
- * @param[in] val pointer to the beginning of the data byte array
- * @param[in] len the length (in bytes) of the data to write
- * @return True if successful write operation. False otherwise.
- */
-bool APDS9930::wireWriteDataBlock(uint8_t reg,
-                                  uint8_t *val,
-                                  unsigned int len)
-{
-    if (HAL_I2C_Mem_Write(this->_hi2c1, this->_config.I2C_Address, reg, APDS9930_AUTO_INCREMENT, val, len, this->_config.Timeout) != HAL_StatusTypeDef::HAL_OK)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Reads a single byte from the I2C device and specified register
- *
- * @param[in] reg the register to read from
- * @param[out] the value returned from the register
- * @return True if successful read operation. False otherwise.
- */
-bool APDS9930::wireReadDataByte(uint8_t reg, uint8_t &val)
-{
-    if (HAL_I2C_Mem_Read(this->_hi2c1, this->_config.I2C_Address, reg, APDS9930_AUTO_INCREMENT, &val, 1, this->_config.Timeout) != HAL_StatusTypeDef::HAL_OK)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * @brief Reads a block (array) of bytes from the I2C device and register
- *
- * @param[in] reg the register to read from
- * @param[out] val pointer to the beginning of the data
- * @param[in] len number of bytes to read
- * @return Number of bytes read. -1 on read error.
- */
-int APDS9930::wireReadDataBlock(uint8_t reg,
-                                uint8_t *val,
-                                unsigned int len)
-{
-    if (HAL_I2C_Mem_Read(this->_hi2c1, this->_config.I2C_Address, reg, APDS9930_AUTO_INCREMENT, val, len, this->_config.Timeout) != HAL_StatusTypeDef::HAL_OK)
-    {
-        return false;
-    }
-
-    return len;
+    return response;
 }

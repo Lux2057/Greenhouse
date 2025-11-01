@@ -57,6 +57,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define Multiplexer_A0_Pin GPIO_PIN_1
+#define Multiplexer_A0_GPIO_Port GPIOA
+#define Multiplexer_A1_Pin GPIO_PIN_2
+#define Multiplexer_A1_GPIO_Port GPIOA
+#define Multiplexer_A2_Pin GPIO_PIN_3
+#define Multiplexer_A2_GPIO_Port GPIOA
+#define Multiplexer_Reset_Pin GPIO_PIN_4
+#define Multiplexer_Reset_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

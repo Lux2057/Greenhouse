@@ -9,4 +9,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     "${PROJECT_SOURCE_DIR}/Core/App/Drivers/PCA9548A.cpp"
     "${PROJECT_SOURCE_DIR}/Core/App/Drivers/SSD1306.h"
     "${PROJECT_SOURCE_DIR}/Core/App/Drivers/SSD1306.cpp"
+    "${PROJECT_SOURCE_DIR}/Core/App/Drivers/MG90s_180.h"
+    "${PROJECT_SOURCE_DIR}/Core/App/Drivers/MG90s_180.cpp"
+    "${PROJECT_SOURCE_DIR}/Core/App/Drivers/CSMS.h"
+    "${PROJECT_SOURCE_DIR}/Core/App/Drivers/CSMS.cpp"
 )

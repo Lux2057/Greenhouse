@@ -150,7 +150,6 @@ HAL_Response<uint16_t> APDS9930::Proximity()
 
 HAL_Response<float> APDS9930::AmbientLight()
 {
-
     HAL_Response<float> response;
     if (!this->_is_ready_to_use())
     {
@@ -265,7 +264,7 @@ HAL_StatusTypeDef APDS9930::EnableProximitySensor(bool enable, bool interrupts)
 
 HAL_StatusTypeDef APDS9930::_I2C_set_cmd(uint8_t cmd)
 {
-    HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress << 1, &cmd, 1, this->_config.Timeout);
+    HAL_StatusTypeDef status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress, &cmd, 1, this->_config.Timeout);
 
     this->_update_device_status(status);
 
@@ -286,7 +285,7 @@ HAL_StatusTypeDef APDS9930::_I2C_read_byte(uint8_t const &reg, uint8_t *val)
     if (status != HAL_StatusTypeDef::HAL_OK)
         return status;
 
-    status = HAL_I2C_Master_Receive(this->_config.I2C, this->_config.DevAddress << 1, val, 1, this->_config.Timeout);
+    status = HAL_I2C_Master_Receive(this->_config.I2C, this->_config.DevAddress, val, 1, this->_config.Timeout);
 
     this->_update_device_status(status);
 
@@ -300,7 +299,7 @@ HAL_StatusTypeDef APDS9930::_I2C_write_byte(uint8_t const &reg, uint8_t val)
     if (status != HAL_StatusTypeDef::HAL_OK)
         return status;
 
-    status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress << 1, &val, 1, this->_config.Timeout);
+    status = HAL_I2C_Master_Transmit(this->_config.I2C, this->_config.DevAddress, &val, 1, this->_config.Timeout);
 
     this->_update_device_status(status);
 

@@ -26,8 +26,10 @@ public:
 template <typename T>
 struct I2C_Device
 {
+    I2C_Device() : Device(nullptr) {};
+    I2C_Device(uint8_t channel) : MultiplexerChannel(channel), Device(nullptr) {};
     uint8_t MultiplexerChannel;
-    shared_ptr<T> Sensor{nullptr};
+    shared_ptr<T> Device{nullptr};
 };
 
 #endif // TEMPLATES_H

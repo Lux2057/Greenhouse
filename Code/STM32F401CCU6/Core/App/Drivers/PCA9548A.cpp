@@ -4,6 +4,8 @@ PCA9548A::PCA9548A(PCA9548A::Config mux_config) : I2C_DeviceBase(_base_config(mu
 {
     this->_mux_config = mux_config;
     this->_mux_config.HardwareAddress = _normalize_hardware_address(mux_config.HardwareAddress);
+
+    this->_init();
 }
 
 HAL_StatusTypeDef PCA9548A::SelectChannel(uint8_t channel, bool enable)
@@ -40,6 +42,9 @@ bool PCA9548A::ReInit()
 
 bool PCA9548A::_init()
 {
+    HAL_GPIO_WritePin(this->_mux_config.ResetPinPort, this->_mux_config.ResetPin, GPIO_PinState::GPIO_PIN_SET);
+    HAL_Delay(PCA9548A_RESET_TIME_HIGH);
+
     HAL_StatusTypeDef status = this->_set_hardware_address();
     if (status != HAL_StatusTypeDef::HAL_OK)
     {
@@ -58,7 +63,7 @@ I2C_DeviceBase::Config PCA9548A::_base_config(PCA9548A::Config mux_config)
 {
     I2C_DeviceBase::Config config;
     config.I2C = mux_config.I2C;
-    config.DevAddress = (PCA9548A_BASE_I2C_ADDR + _normalize_hardware_address(mux_config.HardwareAddress)) << 1;
+    config.DevAddress = (PCA9548A_BASE_I2C_ADDR + _normalize_hardware_address(mux_config.HardwareAddress));
     config.Timeout = mux_config.Timeout;
 
     return config;

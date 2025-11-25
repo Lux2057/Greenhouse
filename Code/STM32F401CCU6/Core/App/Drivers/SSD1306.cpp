@@ -2,6 +2,8 @@
 
 SSD1306::SSD1306(Config config) : I2C_DeviceBase(config)
 {
+    HAL_StatusTypeDef test = HAL_I2C_IsDeviceReady(config.I2C, config.DevAddress, 3, 10);
+
     this->_init();
 }
 

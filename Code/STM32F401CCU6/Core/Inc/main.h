@@ -49,8 +49,6 @@ extern "C" {
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -67,10 +65,6 @@ void Error_Handler(void);
 #define Multiplexer_A2_GPIO_Port GPIOA
 #define Multiplexer_Reset_Pin GPIO_PIN_4
 #define Multiplexer_Reset_GPIO_Port GPIOA
-#define Servo_Pin GPIO_PIN_7
-#define Servo_GPIO_Port GPIOA
-#define Moisture_sensor_Pin GPIO_PIN_1
-#define Moisture_sensor_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

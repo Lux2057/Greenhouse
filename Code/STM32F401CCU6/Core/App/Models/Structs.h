@@ -2,16 +2,14 @@
 #define STRUCTS_H
 
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_hal_rtc.h"
 #include "stm32f4xx_hal_i2c.h"
-#include "../App/Drivers/PCA9548A.h"
-#include "../App/Drivers/MG90s_180.h"
 
-struct AppConfig
+struct I2C_ControllerConfig
 {
-    PCA9548A::Config Multiplexer;
-    MG90S_180::Config Servo;
-    RTC_HandleTypeDef* DtSource;
+public:
+    I2C_HandleTypeDef *I2C{nullptr};
+    uint8_t *MultiplexerChannels{nullptr};
+    uint8_t MultiplexerChannelsCount;
 };
 
 #endif // STRUCTS_H

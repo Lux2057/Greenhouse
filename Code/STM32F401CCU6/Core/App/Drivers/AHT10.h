@@ -3,16 +3,16 @@
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_i2c.h"
+#include "I2C_DeviceBase.h"
 #include "../Models/Enums.h"
 #include "../Models/Templates.h"
-#include "I2C_DeviceBase.h"
 
 using namespace std;
 
 class AHT10 : public I2C_DeviceBase
 {
 
-#define AHT10_DEFAULT_I2C_DEV_ADDRESS 0x38
+#define AHT10_DEFAULT_I2C_DEV_ADDRESS 0x70
 #define AHT10_CMD_INIT 0xE1
 #define AHT10_CMD_MEASURE_TRIG 0xAC
 #define AHT10_CMD_SOFT_RESET 0xBA

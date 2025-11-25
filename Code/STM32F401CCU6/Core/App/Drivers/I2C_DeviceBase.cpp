@@ -3,7 +3,6 @@
 I2C_DeviceBase::I2C_DeviceBase(Config config)
 {
     this->_config = config;
-    this->_config.DevAddress = this->_config.DevAddress << 1;
 
     if (config.I2C == nullptr)
     {
@@ -31,7 +30,7 @@ void I2C_DeviceBase::_update_device_status(HAL_StatusTypeDef status)
         return;
     }
 
-    HAL_StatusTypeDef availability = HAL_I2C_IsDeviceReady(this->_config.I2C, this->_config.DevAddress, 3, this->_config.Timeout);
+    HAL_StatusTypeDef availability = HAL_I2C_IsDeviceReady(this->_config.I2C, this->_config.DevAddress << 1, 3, this->_config.Timeout);
 
     this->_status = availability == HAL_StatusTypeDef::HAL_OK ? DeviceStatus::Error : DeviceStatus::Unavailable;
 }

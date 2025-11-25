@@ -3,9 +3,9 @@
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_i2c.h"
+#include "I2C_DeviceBase.h"
 #include "../Models/Enums.h"
 #include "../Models/Templates.h"
-#include "I2C_DeviceBase.h"
 
 using namespace std;
 
